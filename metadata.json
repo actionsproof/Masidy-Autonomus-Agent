@@ -1,0 +1,8 @@
+{
+  "name": "Masidy Agent",
+  "description": "A full-stack autonomous AI software engineer web app where users describe what they want built and watch the agent plan, code, run commands, browse, and deploy in real time.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

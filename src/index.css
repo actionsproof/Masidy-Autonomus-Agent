@@ -1,0 +1,24 @@
+@import "tailwindcss";
+
+@theme {
+  --color-border-immersive: #1f1f23;
+  --color-border-immersive-light: #27272a;
+  --color-bg-immersive-dark: #050506;
+  --color-bg-immersive-panel: #0a0a0c;
+  --color-bg-immersive-main: #0e0e11;
+  --color-bg-immersive-card: #16161a;
+  --color-bg-immersive-sidebar: #08080a;
+  --color-text-immersive-muted: #71717a;
+  --color-text-immersive-darker: #52525b;
+  --color-text-immersive-active: #e4e4e7;
+  --color-accent-indigo: #4f46e5;
+  --color-accent-indigo-hover: #4338ca;
+  --color-accent-cyan: #06b6d4;
+  --color-accent-emerald: #10b981;
+}
+
+body {
+  background-color: #050506;
+  color: #d1d1d1;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+}
