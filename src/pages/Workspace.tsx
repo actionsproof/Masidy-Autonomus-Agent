@@ -58,29 +58,29 @@ export function TaskFeedbackWidget({ projectId, tasks }: TaskFeedbackWidgetProps
   };
 
   return (
-    <div className="p-3 border-b border-[#1f1f23] select-none text-left">
+    <div className="p-3 border-b border-gray-200 dark:border-[#1f1f23] select-none text-left bg-white dark:bg-[#08080a] transition-colors duration-200">
       <div className="flex items-center justify-between mb-2">
-        <div className="text-[10px] font-bold uppercase text-[#52525b] tracking-wider">Evaluation & Feedback</div>
+        <div className="text-[10px] font-bold uppercase text-gray-500 dark:text-[#52525b] tracking-wider">Evaluation & Feedback</div>
         <button 
           onClick={() => setShowWidget(!showWidget)}
-          className="text-[9.5px] font-mono uppercase font-bold text-indigo-400 hover:text-indigo-300 px-1.5 py-0.5 rounded bg-[#16161a] hover:bg-[#1f1f23] border border-[#27272a] transition-all cursor-pointer"
+          className="text-[9.5px] font-mono uppercase font-bold text-indigo-600 hover:text-indigo-500 px-1.5 py-0.5 rounded bg-gray-100 dark:bg-[#16161a] hover:bg-gray-200 dark:hover:bg-[#1f1f23] border border-gray-200 dark:border-[#27272a] transition-all cursor-pointer"
         >
           {showWidget ? '[Hide]' : '[Evaluate Task]'}
         </button>
       </div>
 
       {showWidget && (
-        <div className="p-3 bg-[#0e0e11] border border-[#1f1f23] rounded-lg space-y-3">
+        <div className="p-3 bg-white dark:bg-[#0e0e11] border border-gray-200 dark:border-[#1f1f23] rounded-lg space-y-3 transition-colors duration-200">
           {/* Select Task Dropdown */}
           <div>
-            <label className="block text-[9px] font-bold font-mono text-[#71717a] uppercase mb-1">Select Task Outcome</label>
+            <label className="block text-[9px] font-bold font-mono text-gray-500 dark:text-[#71717a] uppercase mb-1">Select Task Outcome</label>
             <select
               value={selectedTaskId}
               onChange={(e) => {
                 setSelectedTaskId(e.target.value);
                 setIsSuccess(false);
               }}
-              className="w-full bg-[#16161a] border border-[#27272a] text-[10.5px] px-2.5 py-1.5 rounded text-[#e3e3e3] focus:outline-none focus:border-[#4f46e5]/45 font-medium"
+              className="w-full bg-white dark:bg-[#16161a] border border-gray-200 dark:border-[#27272a] text-[10.5px] px-2.5 py-1.5 rounded text-gray-900 dark:text-[#e3e3e3] focus:outline-none focus:border-[#4f46e5]/45 font-medium transition-colors duration-200"
             >
               {rateableTasks.map(t => (
                 <option key={t.id} value={t.id}>
@@ -91,35 +91,35 @@ export function TaskFeedbackWidget({ projectId, tasks }: TaskFeedbackWidgetProps
           </div>
 
           {existingFeedback ? (
-            <div className="text-[10px] text-emerald-400 bg-emerald-950/20 border border-emerald-900/30 p-2.5 rounded leading-relaxed select-text">
+            <div className="text-[10px] text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-900/30 p-2.5 rounded leading-relaxed select-text transition-colors duration-200">
               <div className="flex items-center space-x-1.5 font-bold mb-1">
                 <span>✓ Task Rated</span>
                 <span className="text-amber-400">{'★'.repeat(existingFeedback.rating)}</span>
               </div>
-              <div className="text-[#a1a1aa] italic">"{existingFeedback.feedbackText}"</div>
+              <div className="text-gray-700 dark:text-[#a1a1aa] italic">"{existingFeedback.feedbackText}"</div>
               {existingFeedback.alternativeApproach && (
-                <div className="text-[9.5px] text-[#71717a] font-mono mt-1.5 pt-1 border-t border-[#1f1f23]/45">
-                  <span className="text-indigo-400 font-bold">Alternative:</span> {existingFeedback.alternativeApproach}
+                <div className="text-[9.5px] text-gray-500 dark:text-[#71717a] font-mono mt-1.5 pt-1 border-t border-gray-200 dark:border-[#1f1f23]/45">
+                  <span className="text-indigo-600 dark:text-indigo-300 font-bold">Alternative:</span> {existingFeedback.alternativeApproach}
                 </div>
               )}
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-3">
               {isSuccess && (
-                <div className="text-[10px] font-medium text-emerald-400 bg-emerald-950/20 border border-emerald-900/10 p-1.5 rounded text-center">
+                <div className="text-[10px] font-medium text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-200 dark:border-emerald-900/10 p-1.5 rounded text-center transition-colors duration-200">
                   Feedback registered successfully!
                 </div>
               )}
               {/* Stars Selector */}
               <div className="flex items-center justify-between">
-                <span className="text-[9px] font-bold font-mono text-[#71717a] uppercase">Rating</span>
+                <span className="text-[9px] font-bold font-mono text-gray-500 dark:text-[#71717a] uppercase">Rating</span>
                 <div className="flex items-center space-x-1">
                   {[1, 2, 3, 4, 5].map((num) => (
                     <button
                       key={num}
                       type="button"
                       onClick={() => setRating(num)}
-                      className={`text-sm tracking-tighter hover:scale-115 transition-transform cursor-pointer ${num <= rating ? 'text-amber-400' : 'text-[#27272a]'}`}
+                      className={`text-sm tracking-tighter hover:scale-115 transition-transform cursor-pointer ${num <= rating ? 'text-amber-400' : 'text-gray-400 dark:text-[#9ca3af]'}`}
                     >
                       ★
                     </button>
@@ -133,7 +133,7 @@ export function TaskFeedbackWidget({ projectId, tasks }: TaskFeedbackWidgetProps
                   required
                   value={feedbackText}
                   onChange={(e) => setFeedbackText(e.target.value)}
-                  className="w-full bg-[#16161a] border border-[#27272a] focus:border-[#4f46e5]/30 text-[10px] p-2 rounded text-[#e3e3e3] placeholder-gray-600 focus:outline-none resize-none leading-relaxed"
+                  className="w-full bg-white dark:bg-[#16161a] border border-gray-200 dark:border-[#27272a] focus:border-[#4f46e5]/30 text-[10px] p-2 rounded text-gray-900 dark:text-[#e3e3e3] placeholder:text-gray-400 dark:placeholder:text-[#6b7280] focus:outline-none resize-none leading-relaxed transition-colors duration-200"
                   rows={2}
                 />
               </div>
@@ -144,13 +144,13 @@ export function TaskFeedbackWidget({ projectId, tasks }: TaskFeedbackWidgetProps
                   placeholder="Suggested alternative approach (optional)..."
                   value={alternative}
                   onChange={(e) => setAlternative(e.target.value)}
-                  className="w-full bg-[#16161a] border border-[#27272a] focus:border-[#4f46e5]/30 text-[10px] px-2.5 py-1.5 rounded text-[#e3e3e3] placeholder-gray-600 focus:outline-none"
+                  className="w-full bg-white dark:bg-[#16161a] border border-gray-200 dark:border-[#27272a] focus:border-[#4f46e5]/30 text-[10px] px-2.5 py-1.5 rounded text-gray-900 dark:text-[#e3e3e3] placeholder:text-gray-400 dark:placeholder:text-[#6b7280] focus:outline-none transition-colors duration-200"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-[#4f46e5] hover:bg-[#4338ca] text-white font-bold h-7.5 rounded text-[10px] uppercase tracking-wider font-mono shadow-[0_0_8px_rgba(79,70,229,0.2)] cursor-pointer"
+                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold h-7.5 rounded text-[10px] uppercase tracking-wider font-mono shadow-[0_0_8px_rgba(79,70,229,0.2)] cursor-pointer transition-all"
               >
                 Submit Feedback
               </button>
@@ -491,10 +491,10 @@ export default function Workspace() {
       {!agentChatVisible && (
         <button
           onClick={() => setAgentChatVisible(true)}
-          className="w-6 h-full border-l border-[#1f1f23] bg-[#0a0a0c] hover:bg-[#121217] transition-all duration-150 flex flex-col items-center justify-center space-y-4 cursor-pointer select-none shrink-0 group border-b border-[#1f1f23]"
+          className="w-6 h-full border-l border-gray-200 dark:border-[#1f1f23] bg-white dark:bg-[#0a0a0c] hover:bg-gray-50 dark:hover:bg-[#121217] transition-all duration-150 flex flex-col items-center justify-center space-y-4 cursor-pointer select-none shrink-0 group border-b border-gray-200 dark:border-[#1f1f23]"
           title="Expand Chat & Logs Sidebar"
         >
-          <div className="text-[9px] font-bold font-mono tracking-widest text-[#52525b] group-hover:text-indigo-400 uppercase [writing-mode:vertical-lr] flex items-center gap-1.5 transition-colors">
+          <div className="text-[9px] font-bold font-mono tracking-widest text-gray-500 dark:text-[#52525b] group-hover:text-indigo-400 uppercase [writing-mode:vertical-lr] flex items-center gap-1.5 transition-colors">
             <span className="text-indigo-500 font-extrabold -translate-y-0.5 font-sans">❮</span>
             <span>CHAT & LOGS</span>
           </div>
@@ -604,11 +604,11 @@ export default function Workspace() {
 
                     <div className="grid grid-cols-2 gap-1.5">
                       <div>
-                        <label className="block text-[8px] font-bold font-mono text-[#52525b] uppercase mb-0.5">Tool Type</label>
+                        <label className="block text-[8px] font-bold font-mono text-gray-500 dark:text-[#52525b] uppercase mb-0.5">Tool Type</label>
                         <select
                           value={customStepType}
                           onChange={(e) => setCustomStepType(e.target.value)}
-                          className="w-full bg-[#16161a] border border-[#27272a] text-[10px] p-1.5 rounded text-white focus:outline-none"
+                          className="w-full bg-white dark:bg-[#16161a] border border-gray-200 dark:border-[#27272a] text-[10px] p-1.5 rounded text-gray-900 dark:text-white focus:outline-none transition-colors duration-200"
                         >
                           <option value="think">think</option>
                           <option value="plan">plan</option>
@@ -620,31 +620,31 @@ export default function Workspace() {
                       </div>
 
                       <div>
-                        <label className="block text-[8px] font-bold font-mono text-[#52525b] uppercase mb-0.5">Core Title</label>
+                        <label className="block text-[8px] font-bold font-mono text-gray-500 dark:text-[#71717a] uppercase mb-0.5">Core Title</label>
                         <input
                           type="text"
                           placeholder="e.g. Run tests"
                           value={customStepTitle}
                           onChange={(e) => setCustomStepTitle(e.target.value)}
-                          className="w-full bg-[#16161a] border border-[#27272a] text-[10px] p-1 px-1.5 rounded text-white focus:outline-none placeholder-gray-650 h-7"
+                          className="w-full bg-white dark:bg-[#16161a] border border-gray-200 dark:border-[#27272a] text-[10px] p-1 px-1.5 rounded text-gray-900 dark:text-white focus:outline-none placeholder:text-gray-400 dark:placeholder:text-[#6b7280] h-7 transition-colors duration-200"
                         />
                       </div>
                     </div>
 
                     <div>
-                      <label className="block text-[8px] font-bold font-mono text-[#52525b] uppercase mb-0.5">Detailed Logs Report</label>
+                      <label className="block text-[8px] font-bold font-mono text-gray-500 dark:text-[#71717a] uppercase mb-0.5">Detailed Logs Report</label>
                       <textarea
                         rows={2}
                         placeholder="Emitted terminal log traces (optional)..."
                         value={customStepLogs}
                         onChange={(e) => setCustomStepLogs(e.target.value)}
-                        className="w-full bg-[#16161a] border border-[#27272a] text-[9.5px] p-1.5 rounded text-white focus:outline-none placeholder-gray-650 font-mono resize-none leading-relaxed"
+                        className="w-full bg-white dark:bg-[#16161a] border border-gray-200 dark:border-[#27272a] text-[9.5px] p-1.5 rounded text-gray-900 dark:text-white focus:outline-none placeholder:text-gray-400 dark:placeholder:text-[#6b7280] font-mono resize-none leading-relaxed transition-colors duration-200"
                       />
                     </div>
 
                     <button
                       type="submit"
-                      className="w-full h-7 bg-[#16161a] hover:bg-[#1c1c21] text-[#e4e4e7] hover:text-white border border-[#27272a] hover:border-[#3f3f46] uppercase font-mono text-[9px] font-bold rounded transition-all cursor-pointer flex items-center justify-center space-x-1"
+                      className="w-full h-7 bg-indigo-600 hover:bg-indigo-700 text-white border border-indigo-700 rounded uppercase font-mono text-[9px] font-bold transition-all cursor-pointer flex items-center justify-center space-x-1"
                     >
                       <Plus className="w-3 h-3 mr-0.5" />
                       <span>Inject Trace Step</span>
@@ -654,17 +654,17 @@ export default function Workspace() {
               )}
 
               {/* Status information when empty */}
-              <div className="flex items-center justify-between text-[9px] font-mono text-[#52525b] select-none">
+              <div className="flex items-center justify-between text-[9px] font-mono text-gray-500 dark:text-[#52525b] select-none">
                 <span>Logged Traces: {steps.length}</span>
                 <span>Active project schema</span>
               </div>
 
               {steps.length === 0 ? (
-                <div className="p-6 text-center border border-dashed border-[#1f1f23] rounded-lg select-none my-2.5 bg-[#0a0a0c]">
-                  <ListTodo className="w-6 h-6 text-[#52525b] mx-auto mb-1.5 stroke-[1.5]" />
-                  <p className="text-[11px] text-[#a1a1aa] font-medium">No cycles yet</p>
-                  <p className="text-[10px] text-[#71717a] font-mono mt-0.5 max-w-[200px] mx-auto leading-normal">
-                    Enter a prompt in the prompter below, or turn on the <span className="text-indigo-400 font-semibold cursor-pointer" onClick={() => setShowConsole(true)}>Step Simulator</span> to stream layout cycles!
+                <div className="p-6 text-center border border-dashed border-gray-200 dark:border-[#1f1f23] rounded-lg select-none my-2.5 bg-white dark:bg-[#0a0a0c] transition-colors duration-200">
+                  <ListTodo className="w-6 h-6 text-gray-400 dark:text-[#52525b] mx-auto mb-1.5 stroke-[1.5]" />
+                  <p className="text-[11px] text-gray-700 dark:text-[#a1a1aa] font-medium">No cycles yet</p>
+                  <p className="text-[10px] text-gray-500 dark:text-[#71717a] font-mono mt-0.5 max-w-[200px] mx-auto leading-normal">
+                    Enter a prompt in the prompter below, or turn on the <span className="text-indigo-600 dark:text-indigo-400 font-semibold cursor-pointer" onClick={() => setShowConsole(true)}>Step Simulator</span> to stream layout cycles!
                   </p>
                 </div>
               ) : (

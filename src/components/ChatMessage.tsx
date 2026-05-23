@@ -20,15 +20,21 @@ export function ChatMessage({ message }: ChatMessageProps) {
   }
 
   return (
-    <div className={`p-4 border-b border-gray-200 dark:border-[#1f1f23] transition-colors ${isAgent ? 'bg-gray-50/50 dark:bg-[#0e0e11]/35' : 'bg-white dark:bg-[#050506]/40'}`}>
+    <div
+      className={`p-4 border-b border-gray-200 dark:border-[#1f1f23] transition-colors
+        ${isAgent ? 'bg-gray-50 dark:bg-[#0e0e11]' : 'bg-white dark:bg-[#050506]'}
+      `}
+    >
       <div className="max-w-3xl mx-auto flex items-start space-x-3 text-left">
         {/* Avatar */}
-        <div className={`w-6 h-6 rounded shrink-0 flex items-center justify-center border ${isAgent ? 'bg-gradient-to-br from-[#4f46e5] to-[#06b6d4] border-transparent text-white shadow-[0_0_8px_rgba(79,70,229,0.3)]' : 'bg-gray-100 dark:bg-[#16161a] border-gray-200 dark:border-[#27272a] text-gray-550 dark:text-[#a1a1aa]'}`}>
-          {isAgent ? (
-            <Bot className="w-3.5 h-3.5" />
-          ) : (
-            <User className="w-3.5 h-3.5" />
-          )}
+        <div
+          className={`w-6 h-6 rounded shrink-0 flex items-center justify-center border
+            ${isAgent
+              ? 'bg-gradient-to-br from-[#4f46e5] to-[#06b6d4] border-transparent text-white shadow-[0_0_8px_rgba(79,70,229,0.3)]'
+              : 'bg-gray-100 dark:bg-[#16161a] border-gray-200 dark:border-[#27272a] text-gray-550 dark:text-[#a1a1aa]'}
+          `}
+        >
+          {isAgent ? <Bot className="w-3.5 h-3.5" /> : <User className="w-3.5 h-3.5" />}
         </div>
 
         {/* Content Box */}
@@ -43,7 +49,7 @@ export function ChatMessage({ message }: ChatMessageProps) {
           </div>
 
           {/* Message Core Body */}
-          <div className="markdown-body mt-2 text-[12px] text-gray-700 dark:text-[#d4d4d8] leading-relaxed font-sans prose dark:prose-invert max-w-none">
+          <div className="markdown-body mt-2 text-[12px] text-gray-700 dark:text-[#d4d4d8] leading-relaxed font-sans bg-white dark:bg-[#0e0e11] prose dark:prose-invert max-w-none p-3 rounded-lg border border-gray-100 dark:border-[#23232a]">
             <ReactMarkdown>{message.content}</ReactMarkdown>
           </div>
         </div>

@@ -100,8 +100,16 @@ export default function Dashboard({ onSelectProject }: DashboardProps) {
     fetchAllFeedbacks();
   }, [fetchProjects, fetchUser, fetchTemplates, fetchAllFeedbacks]);
 
+  const recommendationIconSet = [Smartphone, Sparkles, Music, Database];
+
   // Dynamic recommendation pills configuration
-  const recommendations = [
+  const recommendations = templates.length > 0 ? templates.slice(0, 4).map((tpl, idx) => ({
+    id: tpl.id,
+    label: tpl.name,
+    prompt: tpl.samplePrompt || tpl.description,
+    icon: recommendationIconSet[idx] || Code,
+    color: ['text-emerald-500 dark:text-emerald-400', 'text-indigo-500 dark:text-indigo-400', 'text-purple-500 dark:text-purple-400', 'text-sky-500 dark:text-sky-450'][idx] || 'text-gray-500 dark:text-gray-400'
+  })) : [
     {
       id: 'android',
       label: 'Build an Android app',
@@ -133,8 +141,13 @@ export default function Dashboard({ onSelectProject }: DashboardProps) {
   ];
 
   // Apply quick suggestion to prompt bar
-  const handleSelectRecommendation = (recPrompt: string) => {
+  const handleSelectRecommendation = (recPrompt: string, templateId?: string) => {
     setPromptText(recPrompt);
+    if (templateId) {
+      setLaunchTemplateId(templateId);
+    } else {
+      setLaunchTemplateId('');
+    }
   };
 
   // Open confirmation launch workspace modal
@@ -149,10 +162,8 @@ export default function Dashboard({ onSelectProject }: DashboardProps) {
 
     setLaunchAppName(smartName);
     setLaunchAppDesc(promptText);
-    setLaunchTemplateId('');
     setIsLaunchModalOpen(true);
   };
-
   // Launch the created Workspace project
   const handleLaunchProject = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -413,7 +424,7 @@ export default function Dashboard({ onSelectProject }: DashboardProps) {
                       <button
                         key={rec.id}
                         type="button"
-                        onClick={() => handleSelectRecommendation(rec.prompt)}
+                        onClick={() => handleSelectRecommendation(rec.prompt, rec.id)}
                         className="flex items-center space-x-2 bg-white dark:bg-[#10121a]/85 border border-gray-200 dark:border-gray-850/70 hover:border-gray-300 dark:hover:border-gray-750 px-3.5 py-1.8 rounded-xl text-xs font-medium text-gray-700 dark:text-gray-300 transition-all shrink-0 shadow-[0_1px_3px_rgba(0,0,0,0.01)] cursor-pointer"
                       >
                         <RecIcon className={`w-3.5 h-3.5 ${rec.color}`} />
