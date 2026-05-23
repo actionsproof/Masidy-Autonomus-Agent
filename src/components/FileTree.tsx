@@ -31,15 +31,15 @@ export function FileTree({ width, style }: FileTreeProps) {
   return (
     <div 
       style={{ width, ...style }} 
-      className="border-r border-[#1f1f23] bg-[#08080a] flex flex-col h-full shrink-0 select-none overflow-hidden"
+      className="border-r border-gray-200 dark:border-[#1f1f23] bg-[#f5f5f7] dark:bg-[#08080a] flex flex-col h-full shrink-0 select-none overflow-hidden"
     >
-      <div className="p-3 border-b border-[#1f1f23] flex items-center justify-between">
-        <span className="text-[10px] font-bold uppercase tracking-wider text-[#52525b]">EXPLORER</span>
+      <div className="p-3 border-b border-gray-200 dark:border-[#1f1f23] flex items-center justify-between">
+        <span className="text-[10px] font-bold uppercase tracking-wider text-gray-500 dark:text-[#52525b]">EXPLORER</span>
         
         {currentProject && (
           <button
             onClick={() => setIsCreating(!isCreating)}
-            className="p-1 rounded bg-[#16161a] border border-[#27272a] text-[#a1a1aa] hover:text-white transition-colors"
+            className="p-1 rounded bg-white dark:bg-[#16161a] border border-gray-200 dark:border-[#27272a] text-gray-500 dark:text-[#a1a1aa] hover:text-gray-800 dark:hover:text-white transition-colors"
             title="Create new file"
           >
             <Plus className="w-3 h-3" />
@@ -50,14 +50,14 @@ export function FileTree({ width, style }: FileTreeProps) {
       <div className="flex-1 overflow-y-auto px-2 py-3">
         {/* Create Input Pane */}
         {isCreating && (
-          <form onSubmit={handleCreateFile} className="mb-3 p-2 bg-[#16161a] rounded border border-[#27272a]">
+          <form onSubmit={handleCreateFile} className="mb-3 p-2 bg-white dark:bg-[#16161a] rounded border border-gray-200 dark:border-[#27272a]">
             <input
               type="text"
               required
               placeholder="e.g. index.css, app.js"
               value={newFileName}
               onChange={(e) => setNewFileName(e.target.value)}
-              className="w-full bg-[#0e0e11] text-[11px] px-2 py-1.5 border border-[#1f1f23] rounded text-[#e4e4e7] focus:outline-none focus:border-[#4f46e5] font-mono mb-2"
+              className="w-full bg-gray-50 dark:bg-[#0e0e11] text-[11px] px-2 py-1.5 border border-gray-200 dark:border-[#1f1f23] rounded text-gray-800 dark:text-[#e4e4e7] focus:outline-none focus:border-[#4f46e5] font-mono mb-2"
               autoFocus
             />
             <div className="flex items-center space-x-2 text-[9px] uppercase font-mono tracking-wider">
@@ -70,7 +70,7 @@ export function FileTree({ width, style }: FileTreeProps) {
               <button
                 type="button"
                 onClick={() => setIsCreating(false)}
-                className="flex-1 py-1 bg-[#27272a] text-[#a1a1aa] hover:text-white rounded text-center"
+                className="flex-1 py-1 bg-gray-100 dark:bg-[#27272a] text-gray-650 dark:text-[#a1a1aa] hover:text-gray-900 dark:hover:text-white rounded text-center"
               >
                 Cancel
               </button>
@@ -79,7 +79,7 @@ export function FileTree({ width, style }: FileTreeProps) {
         )}
 
         {/* Directory Structure Row */}
-        <div className="flex items-center space-x-1.5 px-1.5 py-1 text-[11px] text-[#71717a] font-medium mb-2">
+        <div className="flex items-center space-x-1.5 px-1.5 py-1 text-[11px] text-gray-500 dark:text-[#71717a] font-medium mb-2">
           <Folder className="w-3.5 h-3.5 text-sky-500 fill-sky-950/20" />
           <span className="truncate">workspaces/{currentProject?.id || 'sandbox'}</span>
         </div>
@@ -87,7 +87,7 @@ export function FileTree({ width, style }: FileTreeProps) {
         {/* Files Stream */}
         {fields.length === 0 ? (
           <div className="p-4 text-center">
-            <Folder className="w-8 h-8 text-gray-700 mx-auto mb-2" />
+            <Folder className="w-8 h-8 text-gray-400 mx-auto mb-2" />
             <p className="text-[10px] text-gray-500 font-mono">No files created.</p>
           </div>
         ) : (
@@ -116,11 +116,11 @@ export function FileTree({ width, style }: FileTreeProps) {
                 <button
                   key={f.id}
                   onClick={() => selectFile(currentProject!.id, f.path)}
-                  className={`w-full text-left flex items-center space-x-2 p-1.5 rounded cursor-pointer text-[12px] transition-all ${isActive ? 'bg-[#1e1e24] border-l-2 border-[#4f46e5] text-[#e4e4e7] rounded-r' : 'text-[#a1a1aa] hover:bg-[#18181b] rounded'}`}
+                  className={`w-full text-left flex items-center space-x-2 p-1.5 rounded cursor-pointer text-[12px] transition-all ${isActive ? 'bg-indigo-50/60 dark:bg-[#1e1e24] border-l-2 border-[#4f46e5] text-indigo-600 dark:text-[#e4e4e7] rounded-r' : 'text-gray-600 dark:text-[#a1a1aa] hover:bg-gray-100 dark:hover:bg-[#18181b] rounded'}`}
                 >
                   <span className={`text-[9px] font-bold ${extColor} w-6 text-center select-none font-mono`}>{extLabel}</span>
                   <span className="truncate flex-1 font-sans">{f.path}</span>
-                  <span className="text-[9px] font-mono text-[#52525b] pr-1">{(f.size / 1024).toFixed(1)}k</span>
+                  <span className="text-[9px] font-mono text-gray-400 dark:text-[#52525b] pr-1">{(f.size / 1024).toFixed(1)}k</span>
                 </button>
               );
             })}

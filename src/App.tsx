@@ -26,14 +26,16 @@ export default function App() {
   }, [theme]);
 
   return (
-    <div className="min-h-screen bg-gray-950 text-gray-100 flex flex-col font-sans selection:bg-sky-950">
-      {/* Universal Top Bar Header navigator */}
-      <TopBar 
-        onBack={() => {
-          // De-select project to navigate back to dashboard view
-          useAgentStore.setState({ currentProject: null });
-        }} 
-      />
+    <div className="min-h-screen bg-transparent text-gray-850 dark:text-gray-100 flex flex-col font-sans selection:bg-sky-950">
+      {/* Universal Top Bar Header navigator - Workspaces only */}
+      {currentProject && (
+        <TopBar 
+          onBack={() => {
+            // De-select project to navigate back to dashboard view
+            useAgentStore.setState({ currentProject: null });
+          }} 
+        />
+      )}
 
       <main className="flex-1 flex flex-col min-h-0 relative">
         <AnimatePresence mode="wait">

@@ -330,15 +330,15 @@ export default function Workspace() {
 
   if (!currentProject) {
     return (
-      <div className="flex-1 bg-[#050506] flex flex-col items-center justify-center p-8 select-none h-[calc(100vh-3rem)]">
-        <Layers className="w-10 h-10 text-[#52525b] mb-4 stroke-[1.5]" />
-        <h3 className="text-xs font-semibold text-[#a1a1aa]">Loading project context...</h3>
+      <div className="flex-1 bg-[#fafafc] dark:bg-[#050506] flex flex-col items-center justify-center p-8 select-none h-[calc(100vh-3rem)] transition-colors duration-200">
+        <Layers className="w-10 h-10 text-gray-400 dark:text-[#52525b] mb-4 stroke-[1.5]" />
+        <h3 className="text-xs font-semibold text-gray-500 dark:text-[#a1a1aa]">Loading project context...</h3>
       </div>
     );
   }
 
   return (
-    <div className="flex-1 bg-[#050506] flex h-[calc(100vh-3rem)] overflow-hidden">
+    <div className="flex-1 bg-[#f5f5f7] dark:bg-[#050506] flex h-[calc(100vh-3rem)] overflow-hidden transition-colors duration-200">
       
       {/* 1. Left Sidebar File Explorer */}
       {fileTreeVisible && (
@@ -365,10 +365,10 @@ export default function Workspace() {
       {!fileTreeVisible && (
         <button
           onClick={() => setFileTreeVisible(true)}
-          className="w-6 h-full border-r border-[#1f1f23] bg-[#08080a] hover:bg-[#121217] transition-all duration-150 flex flex-col items-center justify-center space-y-4 cursor-pointer select-none shrink-0 group border-b border-[#1f1f23]"
+          className="w-6 h-full border-r border-gray-200 dark:border-[#1f1f23] bg-white dark:bg-[#08080a] hover:bg-gray-50 dark:hover:bg-[#121217] transition-all duration-150 flex flex-col items-center justify-center space-y-4 cursor-pointer select-none shrink-0 group border-b border-gray-200 dark:border-[#1f1f23]"
           title="Expand Explorer Sidebar"
         >
-          <div className="text-[9px] font-bold font-mono tracking-widest text-[#52525b] group-hover:text-indigo-400 uppercase [writing-mode:vertical-lr] flex items-center gap-1.5 transition-colors">
+          <div className="text-[9px] font-bold font-mono tracking-widest text-gray-500 dark:text-[#52525b] group-hover:text-indigo-500 dark:group-hover:text-indigo-400 uppercase [writing-mode:vertical-lr] flex items-center gap-1.5 transition-colors">
             <span>EXPLORER</span>
             <span className="text-indigo-500 font-extrabold translate-y-0.5 font-sans">❯</span>
           </div>
@@ -376,13 +376,13 @@ export default function Workspace() {
       )}
 
       {/* 2. Middle Workspaces Output Tabs (Code / Browser Preview / Faux Shell Terminal) */}
-      <div className="flex-1 flex flex-col min-w-0 border-r border-[#1f1f23] h-full">
+      <div className="flex-1 flex flex-col min-w-0 border-r border-gray-200 dark:border-[#1f1f23] h-full">
         {/* Workspace Central Toggle controls */}
-        <div className="h-9 border-b border-[#1f1f23] px-3 flex items-center justify-between bg-[#0a0a0c] space-x-1 shrink-0 select-none">
+        <div className="h-9 border-b border-gray-200 dark:border-[#1f1f23] px-3 flex items-center justify-between bg-white dark:bg-[#0a0a0c] space-x-1 shrink-0 select-none">
           <div className="flex items-center space-x-1 h-full">
             <button
               onClick={() => setActiveTab('code')}
-              className={`flex items-center space-x-1.5 px-3.5 h-full text-[11px] font-semibold font-mono border-b-2 transition-all ${activeTab === 'code' ? 'border-[#4f46e5] text-white bg-[#0e0e11]/40' : 'border-transparent text-[#71717a] hover:text-[#e4e4e7]'}`}
+              className={`flex items-center space-x-1.5 px-3.5 h-full text-[11px] font-semibold font-mono border-b-2 transition-all ${activeTab === 'code' ? 'border-[#4f46e5] text-indigo-600 dark:text-white bg-indigo-50/20 dark:bg-[#0e0e11]/40' : 'border-transparent text-gray-500 dark:text-[#71717a] hover:text-gray-800 dark:hover:text-[#e4e4e7]'}`}
             >
               <Code2 className="w-3.5 h-3.5" />
               <span>Code Editor</span>
@@ -390,7 +390,7 @@ export default function Workspace() {
 
             <button
               onClick={() => setActiveTab('browser')}
-              className={`flex items-center space-x-1.5 px-3.5 h-full text-[11px] font-semibold font-mono border-b-2 transition-all ${activeTab === 'browser' ? 'border-[#4f46e5] text-white bg-[#0e0e11]/40' : 'border-transparent text-[#71717a] hover:text-[#e4e4e7]'}`}
+              className={`flex items-center space-x-1.5 px-3.5 h-full text-[11px] font-semibold font-mono border-b-2 transition-all ${activeTab === 'browser' ? 'border-[#4f46e5] text-indigo-600 dark:text-white bg-indigo-50/20 dark:bg-[#0e0e11]/40' : 'border-transparent text-gray-500 dark:text-[#71717a] hover:text-gray-800 dark:hover:text-[#e4e4e7]'}`}
             >
               <Globe className="w-3.5 h-3.5" />
               <span>App Sandbox Preview</span>
@@ -398,7 +398,7 @@ export default function Workspace() {
 
             <button
               onClick={() => setActiveTab('terminal')}
-              className={`flex items-center space-x-1.5 px-3.5 h-full text-[11px] font-semibold font-mono border-b-2 transition-all ${activeTab === 'terminal' ? 'border-[#4f46e5] text-white bg-[#0e0e11]/40' : 'border-transparent text-[#71717a] hover:text-[#e4e4e7]'}`}
+              className={`flex items-center space-x-1.5 px-3.5 h-full text-[11px] font-semibold font-mono border-b-2 transition-all ${activeTab === 'terminal' ? 'border-[#4f46e5] text-indigo-600 dark:text-white bg-indigo-50/20 dark:bg-[#0e0e11]/40' : 'border-transparent text-gray-500 dark:text-[#71717a] hover:text-gray-800 dark:hover:text-[#e4e4e7]'}`}
             >
               <Terminal className="w-3.5 h-3.5" />
               <span>Command Shell</span>
@@ -411,8 +411,8 @@ export default function Workspace() {
               onClick={() => setFileTreeVisible(!fileTreeVisible)}
               className={`h-6 px-2.5 rounded text-[10px] font-mono font-bold tracking-tight border flex items-center space-x-1.5 transition-all cursor-pointer ${
                 fileTreeVisible
-                  ? 'bg-indigo-950/40 text-indigo-400 border-indigo-900/60 hover:bg-indigo-950/65'
-                  : 'bg-[#16161a] border-[#27272a] text-[#71717a] hover:text-white hover:border-[#3f3f46]'
+                  ? 'bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 border-indigo-200 dark:border-indigo-900/60 hover:bg-indigo-100 dark:hover:bg-indigo-950/65'
+                  : 'bg-white dark:bg-[#16161a] border-gray-200 dark:border-[#27272a] text-gray-500 dark:text-[#71717a] hover:text-gray-800 dark:hover:text-white hover:border-gray-300 dark:hover:border-[#3f3f46]'
               }`}
               title="Toggle File Explorer sidebar"
             >
@@ -427,8 +427,8 @@ export default function Workspace() {
               onClick={() => setAgentChatVisible(!agentChatVisible)}
               className={`h-6 px-2.5 rounded text-[10px] font-mono font-bold tracking-tight border flex items-center space-x-1.5 transition-all cursor-pointer ${
                 agentChatVisible
-                  ? 'bg-indigo-950/40 text-indigo-400 border-indigo-900/60 hover:bg-indigo-950/65'
-                  : 'bg-[#16161a] border-[#27272a] text-[#71717a] hover:text-white hover:border-[#3f3f46]'
+                  ? 'bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 border-indigo-200 dark:border-indigo-900/60 hover:bg-indigo-100 dark:hover:bg-indigo-950/65'
+                  : 'bg-white dark:bg-[#16161a] border-gray-200 dark:border-[#27272a] text-gray-500 dark:text-[#71717a] hover:text-gray-800 dark:hover:text-white hover:border-gray-300 dark:hover:border-[#3f3f46]'
               }`}
               title="Toggle Agent Chat & logs sidebar"
             >
@@ -443,8 +443,8 @@ export default function Workspace() {
               onClick={toggleFullScreenCenter}
               className={`h-6 px-2.5 rounded text-[10px] font-mono font-bold tracking-tight border flex items-center space-x-1.5 transition-all cursor-pointer ${
                 (!fileTreeVisible && !agentChatVisible)
-                  ? 'bg-emerald-950/40 text-emerald-400 border-emerald-900/60 hover:bg-emerald-950/65 shadow-[0_0_8px_rgba(16,185,129,0.25)]'
-                  : 'bg-[#16161a] border-[#27272a] text-yellow-500/85 hover:text-yellow-400 hover:border-yellow-900/50'
+                  ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 border-emerald-200 dark:border-emerald-900/60 hover:bg-emerald-100 dark:hover:bg-emerald-950/65 shadow-[0_0_8px_rgba(16,185,129,0.25)]'
+                  : 'bg-white dark:bg-[#16161a] border-gray-200 dark:border-[#27272a] text-yellow-600 dark:text-yellow-500/85 hover:text-yellow-700 dark:hover:text-yellow-400 hover:border-yellow-350 dark:hover:border-yellow-900/50'
               }`}
               title="Toggle Full Focus View (maximize code/terminal/preview)"
             >
@@ -464,7 +464,7 @@ export default function Workspace() {
         </div>
 
         {/* Central Display Render panel */}
-        <div className="flex-1 min-w-0 min-h-0 bg-[#0e0e11] relative">
+        <div className="flex-1 min-w-0 min-h-0 bg-[#ffffff] dark:bg-[#0e0e11] relative">
           {activeTab === 'code' && <CodeViewer />}
           {activeTab === 'browser' && <BrowserPreview />}
           {activeTab === 'terminal' && <TerminalViewer />}
@@ -505,17 +505,17 @@ export default function Workspace() {
       {agentChatVisible && (
         <div 
           style={{ width: agentChatWidth }}
-          className="border-l border-[#1f1f23] bg-[#0a0a0c] flex flex-col h-full shrink-0 overflow-hidden"
+          className="border-l border-gray-200 dark:border-[#1f1f23] bg-white dark:bg-[#0a0a0c] flex flex-col h-full shrink-0 overflow-hidden transition-colors duration-200"
         >
         
         {/* Active Session Context Box */}
-        <div className="p-3 border-b border-[#1f1f23]">
-          <div className="text-[10px] font-bold uppercase text-[#52525b] mb-2 select-none text-left">Current Session</div>
-          <div className="p-3 bg-[#16161a] border border-[#27272a] rounded-lg text-left">
-            <div className="text-xs font-semibold text-white mb-0.5 truncate uppercase font-mono tracking-tight text-left">
+        <div className="p-3 border-b border-gray-200 dark:border-[#1f1f23]">
+          <div className="text-[10px] font-bold uppercase text-gray-400 dark:text-[#52525b] mb-2 select-none text-left">Current Session</div>
+          <div className="p-3 bg-gray-50 dark:bg-[#16161a] border border-gray-200 dark:border-[#27272a] rounded-lg text-left">
+            <div className="text-xs font-semibold text-gray-800 dark:text-white mb-0.5 truncate uppercase font-mono tracking-tight text-left">
               {activeTask ? 'Active Autopilot Task' : 'Awaiting Prompter'}
             </div>
-            <p className="text-[11px] text-[#71717a] leading-tight break-words text-left">
+            <p className="text-[11px] text-gray-500 dark:text-[#71717a] leading-tight break-words text-left">
               {activeTask ? activeTask.prompt : 'Type a feature prompt below to start the autonomous generation cycle.'}
             </p>
           </div>
@@ -525,10 +525,10 @@ export default function Workspace() {
         <TaskFeedbackWidget projectId={currentProject.id} tasks={tasks} />
 
         {/* Right sub-tabs navigator */}
-        <div className="h-9 border-b border-[#1f1f23] bg-[#0a0a0c] flex select-none shrink-0">
+        <div className="h-9 border-b border-gray-200 dark:border-[#1f1f23] bg-white dark:bg-[#0a0a0c] flex select-none shrink-0">
           <button
             onClick={() => setRightActiveSidebarTab('steps')}
-            className={`flex-1 flex items-center justify-center space-x-1.5 text-[10px] font-bold font-mono tracking-wider uppercase border-b-2 transition-colors ${rightActiveSidebarTab === 'steps' ? 'border-[#4f46e5] text-white bg-[#16161a]/20' : 'border-transparent text-[#71717a] hover:text-[#e4e4e7] bg-transparent'}`}
+            className={`flex-1 flex items-center justify-center space-x-1.5 text-[10px] font-bold font-mono tracking-wider uppercase border-b-2 transition-colors ${rightActiveSidebarTab === 'steps' ? 'border-[#4f46e5] text-indigo-650 dark:text-white bg-indigo-50/10 dark:bg-[#16161a]/20' : 'border-transparent text-gray-500 dark:text-[#71717a] hover:text-gray-850 dark:hover:text-[#e4e4e7] bg-transparent'}`}
           >
             <ListTodo className="w-3.5 h-3.5" />
             <span>Milestones Logs</span>
@@ -536,7 +536,7 @@ export default function Workspace() {
 
           <button
             onClick={() => setRightActiveSidebarTab('chat')}
-            className={`flex-1 flex items-center justify-center space-x-1.5 text-[10px] font-bold font-mono tracking-wider uppercase border-b-2 transition-colors ${rightActiveSidebarTab === 'chat' ? 'border-[#4f46e5] text-white bg-[#16161a]/20' : 'border-transparent text-[#71717a] hover:text-[#e4e4e7] bg-transparent'}`}
+            className={`flex-1 flex items-center justify-center space-x-1.5 text-[10px] font-bold font-mono tracking-wider uppercase border-b-2 transition-colors ${rightActiveSidebarTab === 'chat' ? 'border-[#4f46e5] text-indigo-650 dark:text-white bg-indigo-50/10 dark:bg-[#16161a]/20' : 'border-transparent text-gray-500 dark:text-[#71717a] hover:text-gray-850 dark:hover:text-[#e4e4e7] bg-transparent'}`}
           >
             <MessageSquare className="w-3.5 h-3.5" />
             <span>Agent Dialogue</span>
@@ -544,17 +544,17 @@ export default function Workspace() {
         </div>
 
         {/* Side content render panel */}
-        <div className="flex-1 overflow-y-auto bg-[#0a0a0c]">
+        <div className="flex-1 overflow-y-auto bg-white dark:bg-[#0a0a0c]">
           {rightActiveSidebarTab === 'steps' ? (
             <div className="p-3.5 space-y-3 font-sans">
               
               {/* Task Pipeline Header and Controller switches */}
-              <div className="flex items-center justify-between border-b border-[#1f1f23] pb-2 select-none">
-                <span className="text-[9.5px] font-bold font-mono tracking-widest uppercase text-[#52525b]">Task Pipeline</span>
+              <div className="flex items-center justify-between border-b border-gray-200 dark:border-[#1f1f23] pb-2 select-none">
+                <span className="text-[9.5px] font-bold font-mono tracking-widest uppercase text-gray-400 dark:text-[#52525b]">Task Pipeline</span>
                 <button
                   type="button"
                   onClick={() => setShowConsole(!showConsole)}
-                  className={`text-[9.5px] font-mono uppercase font-bold px-2 py-0.5 rounded border transition-all cursor-pointer flex items-center space-x-1 ${showConsole ? 'bg-indigo-950/40 text-indigo-400 border-indigo-900/60' : 'bg-[#16161a] text-[#71717a] border-[#27272a] hover:text-white'}`}
+                  className={`text-[9.5px] font-mono uppercase font-bold px-2 py-0.5 rounded border transition-all cursor-pointer flex items-center space-x-1 ${showConsole ? 'bg-indigo-55 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 border-indigo-200 dark:border-indigo-900/60' : 'bg-white dark:bg-[#16161a] text-gray-500 dark:text-[#71717a] border-gray-200 dark:border-[#27272a] hover:text-gray-800 dark:hover:text-white'}`}
                 >
                   <Sliders className="w-2.5 h-2.5 mr-0.5" />
                   <span>{showConsole ? 'Hide Console' : 'Step Simulator'}</span>
@@ -563,7 +563,7 @@ export default function Workspace() {
 
               {/* Expandable Step Simulator Control Panel */}
               {showConsole && (
-                <div className="p-3 bg-[#0d0d10] border border-[#1f1f23] rounded-lg space-y-3 text-left">
+                <div className="p-3 bg-gray-50 dark:bg-[#0d0d10] border border-gray-200 dark:border-[#1f1f23] rounded-lg space-y-3 text-left">
                   <div className="flex items-center justify-between">
                     <span className="text-[9.5px] font-mono font-bold uppercase text-indigo-400 tracking-wider">Interactive Studio Automation</span>
                     <span className="text-[8px] font-mono text-[#52525b]">SIMULATOR v1.1</span>
