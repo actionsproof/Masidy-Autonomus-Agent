@@ -1,8 +1,13 @@
-import { useState } from 'react';
+import { useState, CSSProperties } from 'react';
 import { File, Plus, Folder, Loader2, Code2, Database } from 'lucide-react';
 import { useAgentStore } from '../stores/agent-store.js';
 
-export function FileTree() {
+interface FileTreeProps {
+  width?: number;
+  style?: CSSProperties;
+}
+
+export function FileTree({ width, style }: FileTreeProps) {
   const { currentProject, fields, selectedFile, selectFile, saveFileContent } = useAgentStore();
   const [newFileName, setNewFileName] = useState('');
   const [isCreating, setIsCreating] = useState(false);
@@ -24,7 +29,10 @@ export function FileTree() {
   };
 
   return (
-    <div className="w-56 border-r border-[#1f1f23] bg-[#08080a] flex flex-col h-full shrink-0 select-none">
+    <div 
+      style={{ width, ...style }} 
+      className="border-r border-[#1f1f23] bg-[#08080a] flex flex-col h-full shrink-0 select-none overflow-hidden"
+    >
       <div className="p-3 border-b border-[#1f1f23] flex items-center justify-between">
         <span className="text-[10px] font-bold uppercase tracking-wider text-[#52525b]">EXPLORER</span>
         

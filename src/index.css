@@ -1,16 +1,42 @@
 @import "tailwindcss";
 
+html {
+  --bg-immersive-dark: #050506;
+  --bg-immersive-panel: #0a0a0c;
+  --bg-immersive-main: #0e0e11;
+  --bg-immersive-card: #16161a;
+  --bg-immersive-sidebar: #08080a;
+  --text-immersive-muted: #71717a;
+  --text-immersive-darker: #52525b;
+  --text-immersive-active: #e4e4e7;
+  --border-immersive: #1f1f23;
+  --border-immersive-light: #27272a;
+}
+
+html.light {
+  --bg-immersive-dark: #f5f5f7;
+  --bg-immersive-panel: #ffffff;
+  --bg-immersive-main: #fbfbfd;
+  --bg-immersive-card: #ffffff;
+  --bg-immersive-sidebar: #f5f5f7;
+  --text-immersive-muted: #6e6e73;
+  --text-immersive-darker: #86868b;
+  --text-immersive-active: #1d1d1f;
+  --border-immersive: #e5e5ea;
+  --border-immersive-light: #e5e5ea;
+}
+
 @theme {
-  --color-border-immersive: #1f1f23;
-  --color-border-immersive-light: #27272a;
-  --color-bg-immersive-dark: #050506;
-  --color-bg-immersive-panel: #0a0a0c;
-  --color-bg-immersive-main: #0e0e11;
-  --color-bg-immersive-card: #16161a;
-  --color-bg-immersive-sidebar: #08080a;
-  --color-text-immersive-muted: #71717a;
-  --color-text-immersive-darker: #52525b;
-  --color-text-immersive-active: #e4e4e7;
+  --color-border-immersive: var(--border-immersive);
+  --color-border-immersive-light: var(--border-immersive-light);
+  --color-bg-immersive-dark: var(--bg-immersive-dark);
+  --color-bg-immersive-panel: var(--bg-immersive-panel);
+  --color-bg-immersive-main: var(--bg-immersive-main);
+  --color-bg-immersive-card: var(--bg-immersive-card);
+  --color-bg-immersive-sidebar: var(--bg-immersive-sidebar);
+  --color-text-immersive-muted: var(--text-immersive-muted);
+  --color-text-immersive-darker: var(--text-immersive-darker);
+  --color-text-immersive-active: var(--text-immersive-active);
   --color-accent-indigo: #4f46e5;
   --color-accent-indigo-hover: #4338ca;
   --color-accent-cyan: #06b6d4;
@@ -18,7 +44,227 @@
 }
 
 body {
-  background-color: #050506;
-  color: #d1d1d1;
+  background-color: var(--bg-immersive-dark);
+  color: var(--text-immersive-active);
   font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+/* Custom Global Light Mode Overrides for Implicit Dark Utility Classes */
+html.light body {
+  background-color: var(--bg-immersive-dark) !important;
+  color: var(--text-immersive-active) !important;
+}
+
+html.light .bg-gray-950,
+html.light .bg-\[\#050506\],
+html.light .bg-\[\#08080a\] {
+  background-color: var(--bg-immersive-sidebar) !important;
+}
+
+html.light .bg-\[\#0a0a0c\] {
+  background-color: var(--bg-immersive-panel) !important;
+}
+
+html.light .bg-\[\#0e0e11\] {
+  background-color: var(--bg-immersive-main) !important;
+}
+
+html.light .bg-\[\#16161a\] {
+  background-color: var(--bg-immersive-card) !important;
+}
+
+html.light .bg-\[\#1e1e24\] {
+  background-color: #e5e5ea !important;
+}
+
+html.light .bg-\[\#121216\],
+html.light .bg-\[\#0d0d10\],
+html.light .bg-\[\#101014\] {
+  background-color: #f2f2f7 !important;
+}
+
+html.light .bg-\[\#1a162b\],
+html.light .bg-\[\#151221\] {
+  background-color: #eef2ff !important;
+}
+
+html.light .bg-\[\#050506\]\/60 {
+  background-color: rgba(245, 245, 247, 0.6) !important;
+}
+
+html.light .bg-\[\#050506\]\/40 {
+  background-color: rgba(245, 245, 247, 0.4) !important;
+}
+
+html.light .bg-\[\#050506\]\/20 {
+  background-color: rgba(245, 245, 247, 0.2) !important;
+}
+
+html.light .bg-\[\#0e0e11\]\/35 {
+  background-color: rgba(245, 245, 247, 0.35) !important;
+}
+
+html.light .bg-\[\#16161a\]\/20 {
+  background-color: rgba(245, 245, 247, 0.2) !important;
+}
+
+html.light .bg-\[\#0a0a0c\]\/80 {
+  background-color: rgba(255, 255, 255, 0.8) !important;
+}
+
+html.light .bg-\[\#16161a\]\/65 {
+  background-color: rgba(245, 245, 247, 0.65) !important;
+}
+
+/* Borders */
+html.light .border-\[\#1f1f23\],
+html.light .border-\[\#1f1f23\]\/45,
+html.light .border-\[\#1f1f23\]\/55 {
+  border-color: var(--border-immersive) !important;
+}
+
+html.light .border-\[\#27272a\] {
+  border-color: var(--border-immersive-light) !important;
+}
+
+/* Hardcoded Dark Mode Text-Contrast Corrections */
+html.light .text-white,
+html.light .text-gray-100,
+html.light .text-gray-200,
+html.light .text-gray-300,
+html.light .text-\[\#e4e4e7\],
+html.light .text-\[\#e3e3e3\] {
+  color: var(--text-immersive-active) !important;
+}
+
+html.light .text-gray-400,
+html.light .text-gray-500,
+html.light .text-\[\#a1a1aa\] {
+  color: var(--text-immersive-muted) !important;
+}
+
+html.light .text-gray-350,
+html.light .text-\[\#71717a\] {
+  color: var(--text-immersive-muted) !important;
+}
+
+html.light .text-gray-600,
+html.light .text-gray-700,
+html.light .text-\[\#52525b\] {
+  color: var(--text-immersive-darker) !important;
+}
+
+html.light textarea,
+html.light textarea.bg-transparent,
+html.light .text-\[\#d4d4d8\] {
+  color: var(--text-immersive-active) !important;
+}
+
+/* Placeholder contrast adjustments for light mode inputs */
+html.light input::placeholder,
+html.light textarea::placeholder,
+html.light [class*="placeholder-"]::placeholder {
+  color: #8e8e93 !important;
+}
+
+/* Color indicators accessibility adjustments */
+html.light .text-sky-400,
+html.light .text-sky-450 {
+  color: #0284c7 !important;
+}
+
+html.light .text-indigo-400,
+html.light .text-indigo-450,
+html.light .text-indigo-405 {
+  color: #4f46e5 !important;
+}
+
+html.light .text-\[\#10b981\],
+html.light .text-emerald-400,
+html.light .text-emerald-500 {
+  color: #059669 !important;
+}
+
+html.light .text-amber-500 {
+  color: #d97706 !important;
+}
+
+/* Reset Tailwind Prose-Invert theme values for Light Mode rendering */
+html.light .prose-invert {
+  --tw-prose-body: #1d1d1f !important;
+  --tw-prose-headings: #1d1d1f !important;
+  --tw-prose-lead: #3a3a3c !important;
+  --tw-prose-links: #4f46e5 !important;
+  --tw-prose-bold: #1d1d1f !important;
+  --tw-prose-counters: #636366 !important;
+  --tw-prose-bullets: #8e8e93 !important;
+  --tw-prose-hr: #e5e5ea !important;
+  --tw-prose-quotes: #3a3a3c !important;
+  --tw-prose-quote-borders: #e5e5ea !important;
+  --tw-prose-captions: #8e8e93 !important;
+  --tw-prose-code: #1d1d1f !important;
+  --tw-prose-pre-code: #1d1d1f !important;
+  --tw-prose-pre-bg: #f5f5f7 !important;
+  --tw-prose-th-borders: #e5e5ea !important;
+  --tw-prose-td-borders: #e5e5ea !important;
+}
+
+/* Core Exclusions and Restorers for Active Elements (Do not apply dark text inside high-contrast color blocks) */
+html.light .bg-\[\#4f46e5\],
+html.light .bg-indigo-600,
+html.light .bg-indigo-650,
+html.light .bg-emerald-600,
+html.light .bg-emerald-700,
+html.light .bg-\[\#10b981\],
+html.light .bg-rose-600,
+html.light .bg-rose-500,
+html.light .bg-rose-950,
+html.light [class*="bg-indigo-"],
+html.light [class*="bg-emerald-"],
+html.light [class*="bg-sky-"],
+html.light [class*="bg-blue-"],
+html.light [class*="bg-rose-"],
+html.light .bg-gradient-to-br,
+html.light .bg-gradient-to-r {
+  color: #ffffff !important;
+}
+
+html.light button.bg-\[\#4f46e5\],
+html.light button.bg-indigo-600,
+html.light button.bg-indigo-650,
+html.light button[class*="bg-indigo-"],
+html.light button[class*="bg-emerald-"],
+html.light button[class*="bg-rose-"] {
+  color: #ffffff !important;
+}
+
+/* Ensure text inside these containers stays beautifully bright */
+html.light .bg-\[\#4f46e5\] *,
+html.light .bg-indigo-600 *,
+html.light .bg-indigo-650 *,
+html.light .bg-gradient-to-br *,
+html.light .bg-emerald-950/30 *,
+html.light [class*="bg-indigo-"] *,
+html.light [class*="bg-emerald-"] *,
+html.light [class*="bg-sky-"] *,
+html.light [class*="bg-blue-"] *,
+html.light [class*="bg-rose-"] * {
+  color: #ffffff !important;
+}
+
+/* Hover Adjustments */
+html.light .hover\:bg-\[\#121217\]:hover,
+html.light .hover\:bg-\[\#18181b\]:hover,
+html.light .hover\:bg-\[\#1a1a1f\]:hover,
+html.light .hover\:bg-\[\#1f1f23\]:hover {
+  background-color: #e5e5ea !important;
+}
+
+html.light .hover\:bg-\[\#1c1c21\]:hover {
+  background-color: #d1d1d6 !important;
+}
+
+html.light .hover\:text-white:hover {
+  color: #1d1d1f !important;
 }

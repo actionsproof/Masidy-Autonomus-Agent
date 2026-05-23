@@ -53,6 +53,8 @@ interface AgentState {
   testTemplate: (id: string) => Promise<any>;
   createCustomStep: (taskId: string, payload: { type: string; title: string; logs?: string; status?: string }) => Promise<void>;
   updateStepDetails: (stepId: string, updates: Partial<Omit<Step, 'id' | 'taskId' | 'createdAt'>>) => Promise<void>;
+  theme: 'dark' | 'light';
+  toggleTheme: () => void;
 }
 
 let eventSource: EventSource | null = null;
@@ -83,6 +85,7 @@ export const useAgentStore = create<AgentState>((set, get) => ({
   templates: [],
   feedbacks: [],
   allFeedbacks: [],
+  theme: (typeof window !== 'undefined' ? localStorage.getItem('theme') as 'dark' | 'light' : 'dark') || 'dark',
 
   fetchUser: async () => {
     try {
@@ -494,5 +497,19 @@ export const useAgentStore = create<AgentState>((set, get) => ({
     } catch (e) {
       console.error('Error updating step details', e);
     }
+  },
+  toggleTheme: () => {
+    const nextTheme = get().theme === 'dark' ? 'light' : 'dark';
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('theme', nextTheme);
+      if (nextTheme === 'light') {
+        document.documentElement.classList.add('light');
+        document.documentElement.classList.remove('dark');
+      } else {
+        document.documentElement.classList.add('dark');
+        document.documentElement.classList.remove('light');
+      }
+    }
+    set({ theme: nextTheme });
   }
 }));

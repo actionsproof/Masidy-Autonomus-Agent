@@ -1,4 +1,4 @@
-import { Terminal, Users, Cpu, Settings, Home, ArrowLeft, RefreshCw, Layers } from 'lucide-react';
+import { Terminal, Users, Cpu, Settings, Home, ArrowLeft, RefreshCw, Layers, Sun, Moon } from 'lucide-react';
 import { useAgentStore } from '../stores/agent-store.js';
 
 interface TopBarProps {
@@ -6,7 +6,7 @@ interface TopBarProps {
 }
 
 export function TopBar({ onBack }: TopBarProps) {
-  const { currentProject, user, sseConnected, isAgentRunning, agentThinkingState } = useAgentStore();
+  const { currentProject, user, sseConnected, isAgentRunning, agentThinkingState, theme, toggleTheme } = useAgentStore();
 
   return (
     <header className="h-12 border-b border-[#1f1f23] bg-[#0a0a0c] flex items-center justify-between px-4 shrink-0 select-none">
@@ -63,6 +63,20 @@ export function TopBar({ onBack }: TopBarProps) {
             <span className="text-[10px] font-mono">{user.tokensUsedToday.toLocaleString()} tokens</span>
           </div>
         )}
+
+        {/* Light Mode Changer button */}
+        <button
+          onClick={toggleTheme}
+          type="button"
+          className="w-8 h-8 flex items-center justify-center rounded-lg border border-[#27272a] bg-[#16161a] hover:bg-[#1c1c21] text-[#a1a1aa] hover:text-white transition-all cursor-pointer shadow-sm select-none"
+          title={`Switch to ${theme === 'dark' ? 'Light' : 'Dark'} Mode`}
+        >
+          {theme === 'dark' ? (
+            <Sun className="w-4 h-4 text-amber-500 hover:scale-105 transition-transform" />
+          ) : (
+            <Moon className="w-4 h-4 text-indigo-500 hover:scale-105 transition-transform" />
+          )}
+        </button>
 
         <div className="w-8 h-8 rounded-full border border-[#27272a] bg-[url('https://api.dicebear.com/7.x/avataaars/svg?seed=Felix')] bg-cover"></div>
       </div>

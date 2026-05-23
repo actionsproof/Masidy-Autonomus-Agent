@@ -6,12 +6,24 @@ import Dashboard from './pages/Dashboard.js';
 import Workspace from './pages/Workspace.js';
 
 export default function App() {
-  const { currentProject, selectProject, fetchUser, fetchProjects } = useAgentStore();
+  const { currentProject, selectProject, fetchUser, fetchProjects, theme } = useAgentStore();
 
   useEffect(() => {
     fetchUser();
     fetchProjects();
   }, [fetchUser, fetchProjects]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if (theme === 'light') {
+        document.documentElement.classList.add('light');
+        document.documentElement.classList.remove('dark');
+      } else {
+        document.documentElement.classList.add('dark');
+        document.documentElement.classList.remove('light');
+      }
+    }
+  }, [theme]);
 
   return (
     <div className="min-h-screen bg-gray-950 text-gray-100 flex flex-col font-sans selection:bg-sky-950">

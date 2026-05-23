@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   Terminal, Globe, Code2, Layers, Cpu, Map, MessageSquare, ListTodo, ShieldAlert,
-  Sliders, Wrench, Sparkles, Play, RefreshCw, Plus
+  Sliders, Wrench, Sparkles, Play, RefreshCw, Plus, Maximize2, Minimize2
 } from 'lucide-react';
 import { useAgentStore } from '../stores/agent-store.js';
 import { FileTree } from '../components/FileTree.js';
@@ -170,6 +170,60 @@ export default function Workspace() {
   
   const [rightActiveSidebarTab, setRightActiveSidebarTab] = useState<'chat' | 'steps'>('steps');
 
+  // Layout states for resizability and visibilities
+  const [fileTreeWidth, setFileTreeWidth] = useState(224);
+  const [fileTreeVisible, setFileTreeVisible] = useState(true);
+  const [agentChatWidth, setAgentChatWidth] = useState(320);
+  const [agentChatVisible, setAgentChatVisible] = useState(true);
+
+  const startResizingFileTree = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const startWidth = fileTreeWidth;
+    const startX = e.clientX;
+
+    const doDrag = (moveEvent: MouseEvent) => {
+      const delta = moveEvent.clientX - startX;
+      setFileTreeWidth(Math.max(140, Math.min(500, startWidth + delta)));
+    };
+
+    const stopDrag = () => {
+      window.removeEventListener('mousemove', doDrag);
+      window.removeEventListener('mouseup', stopDrag);
+    };
+
+    window.addEventListener('mousemove', doDrag);
+    window.addEventListener('mouseup', stopDrag);
+  };
+
+  const startResizingAgentChat = (e: React.MouseEvent) => {
+    e.preventDefault();
+    const startWidth = agentChatWidth;
+    const startX = e.clientX;
+
+    const doDrag = (moveEvent: MouseEvent) => {
+      const delta = startX - moveEvent.clientX; // dragging left expands the right side panel
+      setAgentChatWidth(Math.max(200, Math.min(700, startWidth + delta)));
+    };
+
+    const stopDrag = () => {
+      window.removeEventListener('mousemove', doDrag);
+      window.removeEventListener('mouseup', stopDrag);
+    };
+
+    window.addEventListener('mousemove', doDrag);
+    window.addEventListener('mouseup', stopDrag);
+  };
+
+  const toggleFullScreenCenter = () => {
+    if (fileTreeVisible || agentChatVisible) {
+      setFileTreeVisible(false);
+      setAgentChatVisible(false);
+    } else {
+      setFileTreeVisible(true);
+      setAgentChatVisible(true);
+    }
+  };
+
   // Interactive step automation console states
   const [showConsole, setShowConsole] = useState(false);
   const [isSimulatingLoop, setIsSimulatingLoop] = useState(false);
@@ -287,35 +341,126 @@ export default function Workspace() {
     <div className="flex-1 bg-[#050506] flex h-[calc(100vh-3rem)] overflow-hidden">
       
       {/* 1. Left Sidebar File Explorer */}
-      <FileTree />
+      {fileTreeVisible && (
+        <FileTree width={fileTreeWidth} />
+      )}
+
+      {/* Resizable Divider Left */}
+      {fileTreeVisible && (
+        <div
+          onMouseDown={startResizingFileTree}
+          onDoubleClick={() => setFileTreeWidth(224)}
+          className="w-[3px] bg-[#1a1a20] hover:bg-[#4f46e5]/60 active:bg-[#4f46e5] cursor-col-resize transition-all select-none self-stretch shrink-0 relative z-25 group"
+          title="Drag to resize explorer. Double-click to reset size."
+        >
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col space-y-1 opacity-0 group-hover:opacity-100 transition-opacity">
+            <div className="w-1 h-1 bg-[#4f46e5] rounded-full" />
+            <div className="w-1 h-1 bg-[#4f46e5] rounded-full" />
+            <div className="w-1 h-1 bg-[#4f46e5] rounded-full" />
+          </div>
+        </div>
+      )}
+
+      {/* Collapsed rail explorer button */}
+      {!fileTreeVisible && (
+        <button
+          onClick={() => setFileTreeVisible(true)}
+          className="w-6 h-full border-r border-[#1f1f23] bg-[#08080a] hover:bg-[#121217] transition-all duration-150 flex flex-col items-center justify-center space-y-4 cursor-pointer select-none shrink-0 group border-b border-[#1f1f23]"
+          title="Expand Explorer Sidebar"
+        >
+          <div className="text-[9px] font-bold font-mono tracking-widest text-[#52525b] group-hover:text-indigo-400 uppercase [writing-mode:vertical-lr] flex items-center gap-1.5 transition-colors">
+            <span>EXPLORER</span>
+            <span className="text-indigo-500 font-extrabold translate-y-0.5 font-sans">❯</span>
+          </div>
+        </button>
+      )}
 
       {/* 2. Middle Workspaces Output Tabs (Code / Browser Preview / Faux Shell Terminal) */}
       <div className="flex-1 flex flex-col min-w-0 border-r border-[#1f1f23] h-full">
         {/* Workspace Central Toggle controls */}
-        <div className="h-9 border-b border-[#1f1f23] px-3 flex items-center bg-[#0a0a0c] space-x-1 shrink-0 select-none">
-          <button
-            onClick={() => setActiveTab('code')}
-            className={`flex items-center space-x-1.5 px-3.5 h-full text-[11px] font-semibold font-mono border-b-2 transition-all ${activeTab === 'code' ? 'border-[#4f46e5] text-white bg-[#0e0e11]/40' : 'border-transparent text-[#71717a] hover:text-[#e4e4e7]'}`}
-          >
-            <Code2 className="w-3.5 h-3.5" />
-            <span>Code Editor</span>
-          </button>
+        <div className="h-9 border-b border-[#1f1f23] px-3 flex items-center justify-between bg-[#0a0a0c] space-x-1 shrink-0 select-none">
+          <div className="flex items-center space-x-1 h-full">
+            <button
+              onClick={() => setActiveTab('code')}
+              className={`flex items-center space-x-1.5 px-3.5 h-full text-[11px] font-semibold font-mono border-b-2 transition-all ${activeTab === 'code' ? 'border-[#4f46e5] text-white bg-[#0e0e11]/40' : 'border-transparent text-[#71717a] hover:text-[#e4e4e7]'}`}
+            >
+              <Code2 className="w-3.5 h-3.5" />
+              <span>Code Editor</span>
+            </button>
 
-          <button
-            onClick={() => setActiveTab('browser')}
-            className={`flex items-center space-x-1.5 px-3.5 h-full text-[11px] font-semibold font-mono border-b-2 transition-all ${activeTab === 'browser' ? 'border-[#4f46e5] text-white bg-[#0e0e11]/40' : 'border-transparent text-[#71717a] hover:text-[#e4e4e7]'}`}
-          >
-            <Globe className="w-3.5 h-3.5" />
-            <span>App Sandbox Preview</span>
-          </button>
+            <button
+              onClick={() => setActiveTab('browser')}
+              className={`flex items-center space-x-1.5 px-3.5 h-full text-[11px] font-semibold font-mono border-b-2 transition-all ${activeTab === 'browser' ? 'border-[#4f46e5] text-white bg-[#0e0e11]/40' : 'border-transparent text-[#71717a] hover:text-[#e4e4e7]'}`}
+            >
+              <Globe className="w-3.5 h-3.5" />
+              <span>App Sandbox Preview</span>
+            </button>
 
-          <button
-            onClick={() => setActiveTab('terminal')}
-            className={`flex items-center space-x-1.5 px-3.5 h-full text-[11px] font-semibold font-mono border-b-2 transition-all ${activeTab === 'terminal' ? 'border-[#4f46e5] text-white bg-[#0e0e11]/40' : 'border-transparent text-[#71717a] hover:text-[#e4e4e7]'}`}
-          >
-            <Terminal className="w-3.5 h-3.5" />
-            <span>Command Shell</span>
-          </button>
+            <button
+              onClick={() => setActiveTab('terminal')}
+              className={`flex items-center space-x-1.5 px-3.5 h-full text-[11px] font-semibold font-mono border-b-2 transition-all ${activeTab === 'terminal' ? 'border-[#4f46e5] text-white bg-[#0e0e11]/40' : 'border-transparent text-[#71717a] hover:text-[#e4e4e7]'}`}
+            >
+              <Terminal className="w-3.5 h-3.5" />
+              <span>Command Shell</span>
+            </button>
+          </div>
+
+          <div className="flex items-center space-x-1.5 h-full py-0.5">
+            <button
+              type="button"
+              onClick={() => setFileTreeVisible(!fileTreeVisible)}
+              className={`h-6 px-2.5 rounded text-[10px] font-mono font-bold tracking-tight border flex items-center space-x-1.5 transition-all cursor-pointer ${
+                fileTreeVisible
+                  ? 'bg-indigo-950/40 text-indigo-400 border-indigo-900/60 hover:bg-indigo-950/65'
+                  : 'bg-[#16161a] border-[#27272a] text-[#71717a] hover:text-white hover:border-[#3f3f46]'
+              }`}
+              title="Toggle File Explorer sidebar"
+            >
+              <span>EXPLORER:</span>
+              <span className="font-extrabold uppercase text-[9px]">
+                {fileTreeVisible ? 'ON' : 'OFF'}
+              </span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setAgentChatVisible(!agentChatVisible)}
+              className={`h-6 px-2.5 rounded text-[10px] font-mono font-bold tracking-tight border flex items-center space-x-1.5 transition-all cursor-pointer ${
+                agentChatVisible
+                  ? 'bg-indigo-950/40 text-indigo-400 border-indigo-900/60 hover:bg-indigo-950/65'
+                  : 'bg-[#16161a] border-[#27272a] text-[#71717a] hover:text-white hover:border-[#3f3f46]'
+              }`}
+              title="Toggle Agent Chat & logs sidebar"
+            >
+              <span>LOGS:</span>
+              <span className="font-extrabold uppercase text-[9px]">
+                {agentChatVisible ? 'ON' : 'OFF'}
+              </span>
+            </button>
+
+            <button
+              type="button"
+              onClick={toggleFullScreenCenter}
+              className={`h-6 px-2.5 rounded text-[10px] font-mono font-bold tracking-tight border flex items-center space-x-1.5 transition-all cursor-pointer ${
+                (!fileTreeVisible && !agentChatVisible)
+                  ? 'bg-emerald-950/40 text-emerald-400 border-emerald-900/60 hover:bg-emerald-950/65 shadow-[0_0_8px_rgba(16,185,129,0.25)]'
+                  : 'bg-[#16161a] border-[#27272a] text-yellow-500/85 hover:text-yellow-400 hover:border-yellow-900/50'
+              }`}
+              title="Toggle Full Focus View (maximize code/terminal/preview)"
+            >
+              {!(fileTreeVisible || agentChatVisible) ? (
+                <>
+                  <Minimize2 className="w-3 h-3" />
+                  <span>RESTORE</span>
+                </>
+              ) : (
+                <>
+                  <Maximize2 className="w-3 h-3" />
+                  <span>MAXIMIZE</span>
+                </>
+              )}
+            </button>
+          </div>
         </div>
 
         {/* Central Display Render panel */}
@@ -326,8 +471,42 @@ export default function Workspace() {
         </div>
       </div>
 
+      {/* Resizable Divider Right */}
+      {agentChatVisible && (
+        <div
+          onMouseDown={startResizingAgentChat}
+          onDoubleClick={() => setAgentChatWidth(320)}
+          className="w-[3px] bg-[#1a1a20] hover:bg-[#4f46e5]/60 active:bg-[#4f46e5] cursor-col-resize transition-all select-none self-stretch shrink-0 relative z-25 group"
+          title="Drag to resize agent panel. Double-click to reset size."
+        >
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col space-y-1 opacity-0 group-hover:opacity-100 transition-opacity">
+            <div className="w-1 h-1 bg-[#4f46e5] rounded-full" />
+            <div className="w-1 h-1 bg-[#4f46e5] rounded-full" />
+            <div className="w-1 h-1 bg-[#4f46e5] rounded-full" />
+          </div>
+        </div>
+      )}
+
+      {/* Collapsed rail agent chat button */}
+      {!agentChatVisible && (
+        <button
+          onClick={() => setAgentChatVisible(true)}
+          className="w-6 h-full border-l border-[#1f1f23] bg-[#0a0a0c] hover:bg-[#121217] transition-all duration-150 flex flex-col items-center justify-center space-y-4 cursor-pointer select-none shrink-0 group border-b border-[#1f1f23]"
+          title="Expand Chat & Logs Sidebar"
+        >
+          <div className="text-[9px] font-bold font-mono tracking-widest text-[#52525b] group-hover:text-indigo-400 uppercase [writing-mode:vertical-lr] flex items-center gap-1.5 transition-colors">
+            <span className="text-indigo-500 font-extrabold -translate-y-0.5 font-sans">❮</span>
+            <span>CHAT & LOGS</span>
+          </div>
+        </button>
+      )}
+
       {/* 3. Right Sidebar Logs Panel (Tasks, Step Milestones, Chat Log Console) */}
-      <div className="w-[320px] border-l border-[#1f1f23] bg-[#0a0a0c] flex flex-col h-full shrink-0">
+      {agentChatVisible && (
+        <div 
+          style={{ width: agentChatWidth }}
+          className="border-l border-[#1f1f23] bg-[#0a0a0c] flex flex-col h-full shrink-0 overflow-hidden"
+        >
         
         {/* Active Session Context Box */}
         <div className="p-3 border-b border-[#1f1f23]">
@@ -528,6 +707,7 @@ export default function Workspace() {
         {/* Dynamic chat inputs and answers controllers */}
         <ChatInput />
       </div>
+      )}
 
     </div>
   );
